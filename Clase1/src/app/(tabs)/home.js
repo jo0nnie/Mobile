@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Text style={styles.texto}>Hola mundo owo no se como hacer que se vea la lista de pokemones profe, por eso no estan</Text>
+      <Text style={styles.texto}>Hola mundo no se como hacer que se vea la lista de pokemones profe, por eso no estan</Text>
 
       <FlatList
         data={pokemons}
