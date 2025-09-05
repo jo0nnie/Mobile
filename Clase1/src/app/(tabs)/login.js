@@ -4,7 +4,7 @@ import { Link } from 'expo-router';
 import { useState } from 'react';
 
 export default function Login() {
-  const [username, setUsername] = useState('');
+const [username, setUsername] = useState('');
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -13,7 +13,7 @@ export default function Login() {
         <TextInput style={styles.input} placeholder="Username" value={username} onChangeText={setUsername}/>
         <TextInput style={styles.input} placeholder="Password" secureTextEntry />
         <Link href={`/perfil?username=${username}`} asChild>
-          <Button title="Iniciar sesión" color="#553384ff" />
+          <Button title="Iniciar sesion" color="#553384ff" />
         </Link>
       </View>
     </View>

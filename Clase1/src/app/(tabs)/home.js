@@ -1,30 +1,27 @@
-import { FlatList, View, Text, StyleSheet } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { Link } from "expo-router";
-import usePokemons from "../../hooks/usePokemons"; 
+import { Text, View, StatusBar, FlatList, StyleSheet } from 'react-native';
+import usePokemons from "../../hooks/usePokemons";
 
 export default function Home() {
-  const { pokemons } = usePokemons(20);
-  console.log("Pokemons:", pokemons);
+  const { pokemons, loading, error } = usePokemons(20);
+
+  if (loading) return <Text>Cargando pokemones...</Text>;
+  if (error) return <Text>Error: {error.message}</Text>;
 
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
-      <Text style={styles.texto}>Hola mundo no se como hacer que se vea la lista de pokemones profe, por eso no estan</Text>
+      <Text style={styles.titulo}>Lista de Pokemones !!!</Text>
 
       <FlatList
         data={pokemons}
         keyExtractor={(item) => item.name}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <Text style={styles.nombre}>{item.name}</Text>
+            <Text>{item.name}</Text>
           </View>
         )}
       />
 
-      <Link href="/register" style={styles.link}>Register</Link>
-      <Link href="/login" style={styles.link}>Login</Link>
-      <Link href="/perfil" style={styles.link}>Perfil</Link>
+      <StatusBar style="auto" />
     </View>
   );
 }
@@ -32,28 +29,34 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: "#d2b7d6ff",
-  },
-  texto: {
-    fontSize: 20,
-    fontWeight: "600",
-    marginBottom: 12,
+    backgroundColor: '#d1c4e9',
+    alignItems: 'left',
+    justifyContent: 'left',
   },
   card: {
-    backgroundColor: "#f3f3e6da",
-    padding: 10,
-    marginBottom: 8,
-    borderRadius: 6,
+    backgroundColor: '#f3f3e6da',
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+    borderRadius: 10,
+    width: '90%',
+    shadowColor: '#080202ff',
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    alignItems: 'flex-start', 
+    marginBottom: 10,
   },
-  nombre: {
-    fontSize: 16,
-    textTransform: "capitalize",
+  titulo: {
+    fontSize: 24,
+    fontWeight: 'semibold',
+    marginBottom: 20,
   },
-  link: {
-    marginTop: 10,
-    color: "#553384ff",
-    fontSize: 16,
-    textDecorationLine: "underline",
+  input: {
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 1,
+    width: '100%',
+    marginBottom: 15,
+    paddingHorizontal: 10,
+    borderRadius: 5,
   },
 });

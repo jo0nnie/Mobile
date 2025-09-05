@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
+import api from "../app/api/api";
 
-const usePokemons = (limit = 20) => {
+const usePokemons = (limit) => {
     const [pokemons, setPokemons] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -8,17 +9,17 @@ const usePokemons = (limit = 20) => {
     useEffect(() => {
         const fetchPokemons = async () => {
             try {
-                setLoading(true);
                 const response = await api.get(`/pokemon?limit=${limit}`);
                 setPokemons(response.data.results);
-            } catch (error) {
-                setError(error);
+            } catch (err) {
+                setError(err);
             } finally {
                 setLoading(false);
             }
         };
         fetchPokemons();
     }, [limit]);
+
 
     return { pokemons, loading, error };
 };
