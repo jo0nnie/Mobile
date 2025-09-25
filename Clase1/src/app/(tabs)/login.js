@@ -1,20 +1,51 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
-import { Link } from 'expo-router';
+import { StyleSheet, Text, View, TextInput, Button, ActivityIndicator } from 'react-native';
 import { useState } from 'react';
+import { useAuth } from '../../hooks/useAuth';
+import { useRouter } from 'expo-router';
 
 export default function Login() {
-const [username, setUsername] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const { login, loading, error } = useAuth();
+  const router = useRouter();
+
+  const handleLogin = async () => {
+    try {
+      const response = await login({ username, password });
+      console.log('Usuario logueado:', response.user);
+      router.replace(`/perfil?username=${username}`);
+    } catch (err) {
+      console.log('Error en login:', err);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.card}>
         <Text style={styles.titulo}>Login</Text>
-        <TextInput style={styles.input} placeholder="Username" value={username} onChangeText={setUsername}/>
-        <TextInput style={styles.input} placeholder="Password" secureTextEntry />
-        <Link href={`/perfil?username=${username}`} asChild>
-          <Button title="Iniciar sesion" color="#553384ff" />
-        </Link>
+        <TextInput
+          style={styles.input}
+          placeholder="Username"
+          value={username}
+          onChangeText={setUsername}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+
+        {loading ? (
+          <ActivityIndicator size="large" color="#553384ff" />
+        ) : (
+          <Button title="Iniciar sesión" color="#553384ff" onPress={handleLogin} />
+        )}
+
+        {error && <Text style={styles.error}>{error}</Text>}
       </View>
     </View>
   );
@@ -50,5 +81,10 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 10,
     borderRadius: 5,
+  },
+  error: {
+    marginTop: 10,
+    color: 'red',
+    fontWeight: 'bold',
   },
 });

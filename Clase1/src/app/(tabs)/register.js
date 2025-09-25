@@ -1,30 +1,63 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
-import { Link } from 'expo-router';
+import { StyleSheet, Text, View, TextInput, Button, ActivityIndicator } from 'react-native';
 import { useState } from 'react';
+import { useAuth } from '../../hooks/useAuth';
+import { useRouter } from 'expo-router';
 
 export default function Register() {
   const [username, setUsername] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const { register, loading, error } = useAuth();
+  const router = useRouter();
+
+  const handleRegister = async () => {
+    console.log(`Nombre: ${name}, Usuario: ${username}, Pass: ${password}`);
+    try {
+      await register({ username, password, name });
+      router.replace(`/perfil?username=${username}&name=${name}`);
+    } catch (err) {
+      console.log('Error en registro:', err);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.card}>
         <Text style={styles.titulo}>Register</Text>
-        <TextInput style={styles.input} placeholder="Username" value={username} onChangeText={setUsername} />
-        <TextInput style={styles.input} placeholder="Name" value={name} onChangeText={setName} />
-        <TextInput style={styles.input} placeholder="Password" secureTextEntry value={password} onChangeText={setPassword} />
-        <Link href={`/perfil?username=${username}&name=${name}`} asChild>
-          <Button title="Registrarse" color="#553384ff" />
-        </Link>
 
+        <TextInput
+          style={styles.input}
+          placeholder="Username"
+          value={username}
+          onChangeText={setUsername}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Name"
+          value={name}
+          onChangeText={setName}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+
+        {loading ? (
+          <ActivityIndicator size="large" color="#553384ff" />
+        ) : (
+          <Button title="Registrarse" color="#553384ff" onPress={handleRegister} />
+        )}
+
+        {error && <Text style={styles.error}>{error}</Text>}
       </View>
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -56,5 +89,10 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 10,
     borderRadius: 5,
+  },
+  error: {
+    marginTop: 10,
+    color: 'red',
+    fontWeight: 'bold',
   },
 });

@@ -1,5 +1,5 @@
 import { Text, View, StatusBar, FlatList, StyleSheet } from 'react-native';
-import usePokemons from "../../hooks/usePokemons";
+import usePokemons from "../hooks/usePokemons";
 
 export default function Home() {
   const { pokemons, loading, error } = usePokemons(20);
