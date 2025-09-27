@@ -1,23 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, ActivityIndicator } from 'react-native';
 import { useState } from 'react';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../../hooks/useAuth';
 import { useRouter } from 'expo-router';
 
-export default function Register() {
+export default function Login() {
   const [username, setUsername] = useState('');
-  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const { register, loading, error } = useAuth();
+  const { login, loading, error } = useAuth();
   const router = useRouter();
 
-  const handleRegister = async () => {
-    console.log(`Nombre: ${name}, Usuario: ${username}, Pass: ${password}`);
+  const handleLogin = async () => {
     try {
-      await register({ username, password, name });
-      router.replace(`/perfil?username=${username}&name=${name}`);
+      const response = await login({ username, password });
+      console.log('Usuario logueado:', response.user);
+      router.replace(`/perfil?username=${username}`);
     } catch (err) {
-      console.log('Error en registro:', err);
+      console.log('Error en login:', err);
     }
   };
 
@@ -25,19 +24,12 @@ export default function Register() {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.card}>
-        <Text style={styles.titulo}>Register</Text>
-
+        <Text style={styles.titulo}>Login</Text>
         <TextInput
           style={styles.input}
           placeholder="Username"
           value={username}
           onChangeText={setUsername}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Name"
-          value={name}
-          onChangeText={setName}
         />
         <TextInput
           style={styles.input}
@@ -50,7 +42,7 @@ export default function Register() {
         {loading ? (
           <ActivityIndicator size="large" color="#553384ff" />
         ) : (
-          <Button title="Registrarse" color="#553384ff" onPress={handleRegister} />
+          <Button title="Iniciar sesión" color="#553384ff" onPress={handleLogin} />
         )}
 
         {error && <Text style={styles.error}>{error}</Text>}

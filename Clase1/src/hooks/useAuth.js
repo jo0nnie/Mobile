@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { api } from "../api/api";
+import { api } from "../app/api/api";
 import { useRouter } from "expo-router";
 
 export const useAuth = () => {
