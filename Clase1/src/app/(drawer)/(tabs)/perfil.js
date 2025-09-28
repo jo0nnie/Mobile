@@ -20,7 +20,7 @@ export default function Perfil() {
         {loading ? (
           <ActivityIndicator size="large" color="#553384ff" />
         ) : error ? (
-          <Text style={styles.error}>SIN TOKEN: {error}</Text>
+          <Text style={styles.error}>{error}</Text>
         ) : (
           <FlatList
             data={users}
@@ -33,7 +33,7 @@ export default function Perfil() {
           />
         )}
 
-        <Link href="/home">
+        <Link href="/register">
           <Text style={styles.link}>Volver a home</Text>
         </Link>
       </View>
