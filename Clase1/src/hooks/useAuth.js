@@ -1,19 +1,14 @@
 import { useState } from "react";
-import { api } from "../app/api/api";
+import { api } from "../api/api";
 import { useRouter } from "expo-router";
 
 export const useAuth = () => {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
     const [loading, setLoading] = useState(false);
-
-
-
-
     const router = useRouter();
     const [error, setError] = useState(null);
 
-    // Data es el req.body y tiene que tener name, username y password
     const register = async (data) => {
         try {
             const response = await api.post("/users/register", data);

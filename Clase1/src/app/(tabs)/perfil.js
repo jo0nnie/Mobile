@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ActivityIndicator, FlatList } from 'react-native';
 import { useLocalSearchParams, Link } from 'expo-router';
-import { useUsers } from '../../../hooks/useUsers';
+import { useUsers } from '../../hooks/useUsers';
 
 export default function Perfil() {
   const { username, name } = useLocalSearchParams();

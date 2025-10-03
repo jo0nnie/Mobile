@@ -4,7 +4,7 @@ import axios from "axios";
 //const BASE_URL = "https://template-express-api.onrender.com";
 const PELI_URL = "https://api.tvmaze.com/";
 
-export const pokeApi = axios.create({
+export const peliApi = axios.create({
   baseURL: PELI_URL,
   timeout: 5000,
 });

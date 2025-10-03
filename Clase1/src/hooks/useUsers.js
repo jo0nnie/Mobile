@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { api } from "../app/api/api";
+import { api } from "../api/api";
 import { useAuth } from "./useAuth";
 
 export const useUsers = () => {
