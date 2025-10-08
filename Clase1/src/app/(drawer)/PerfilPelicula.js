@@ -1,6 +1,6 @@
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet, ScrollView, Linking } from "react-native";
+import { Text, Image, StyleSheet, ScrollView, } from "react-native";
 import { api } from "../../api/api";
 
 export default function PerfilPelicula() {
@@ -8,7 +8,7 @@ export default function PerfilPelicula() {
   const [peli, setPeli] = useState(null);
   const [cast, setCast] = useState([]);
   const [error, setError] = useState(null);
-console.log("ID recibido:", id);
+  console.log("ID recibido:", id);
 
   useEffect(() => {
     const fetchPeli = async () => {
@@ -46,18 +46,8 @@ console.log("ID recibido:", id);
       </Text>
 
       <Text style={styles.info}>
-        <Text style={styles.label}>Géneros: </Text>
+        <Text style={styles.label}>Genero: </Text>
         {peli.genres?.join(", ") || "Sin datos"}
-      </Text>
-
-      <Text style={styles.info}>
-        <Text style={styles.label}>Lenguaje: </Text>
-        {peli.language}
-      </Text>
-
-      <Text style={styles.info}>
-        <Text style={styles.label}>Duración: </Text>
-        {peli.runtime ? `${peli.runtime} min` : "No disponible"}
       </Text>
 
       <Text style={styles.info}>
@@ -88,7 +78,7 @@ const styles = StyleSheet.create({
   },
   info: {
     fontSize: 16,
-    marginBottom: 8,
+    marginBottom: 20,
     color: "#ffffffff",
   },
   loading: {
